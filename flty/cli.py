@@ -4,37 +4,55 @@ import sys
 def create_flutter_structure(project_name, is_stateful):
     """Creates a Flutter project structure with the specified name."""
     
-
     base_path = os.path.join(os.getcwd(), project_name)
     folders = ["models", "widgets", "providers", "views"]
     
-
     os.makedirs(base_path, exist_ok=True)
     for folder in folders:
         os.makedirs(os.path.join(base_path, folder), exist_ok=True)
     
-
     view_file = os.path.join(base_path, "views", f"{project_name}_view.dart")
     
-    widget_type = "StatefulWidget" if is_stateful else "StatelessWidget"
-    constructor = f"{project_name.capitalize()}View({is_stateful and '{super.key}' or 'Key? key'});" 
-    
-    dart_template = f"""
+    class_name = f"{project_name.capitalize()}View"
+
+    if is_stateful:
+        dart_template = f"""
 import 'package:flutter/material.dart';
 
-class {project_name.capitalize()}View extends {widget_type} {{
-  {constructor}
-  
+class {class_name} extends StatefulWidget {{
+  const {class_name}({{super.key}});
+
+  @override
+  State<{class_name}> createState() => _{class_name}State();
+}}
+
+class _{class_name}State extends State<{class_name}> {{
   @override
   Widget build(BuildContext context) {{
     return Scaffold(
-      appBar: AppBar(title: Text('{project_name.capitalize()}')),
-      body: Center(child: Text('Welcome to {project_name.capitalize()} View!')),
+      appBar: AppBar(title: Text('{class_name}')),
+      body: Center(child: Text('Welcome to {class_name}!')),
     );
   }}
 }}
-    """
-    
+        """
+    else:
+        dart_template = f"""
+import 'package:flutter/material.dart';
+
+class {class_name} extends StatelessWidget {{
+  const {class_name}({{super.key}});
+
+  @override
+  Widget build(BuildContext context) {{
+    return Scaffold(
+      appBar: AppBar(title: Text('{class_name}')),
+      body: Center(child: Text('Welcome to {class_name}!')),
+    );
+  }}
+}}
+        """
+
     with open(view_file, "w") as f:
         f.write(dart_template.strip())
 
