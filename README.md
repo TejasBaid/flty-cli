@@ -2,7 +2,7 @@
 
 `flty` is a Python-based CLI tool that helps create structured Flutter project folders.
 
-## 📌 Installation
+## Installation
 
 ```sh
 git clone https://github.com/yourusername/flty-cli.git
@@ -13,7 +13,7 @@ pip install --editable .
 
 `flty` is a Python-based CLI tool that helps create structured Flutter project folders.
 
-## 📌 Installation
+## Installation
 
 ```sh
 git clone https://github.com/yourusername/flty-cli.git
